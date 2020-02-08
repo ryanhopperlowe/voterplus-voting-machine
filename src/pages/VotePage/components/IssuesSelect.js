@@ -27,7 +27,8 @@ const IssuesSelect = () => {
         <option value="">Select an issue to vote on</option>
         {issues.map((iss) => (
           <option
-            key={iss} value={iss}
+            key={iss} 
+            value={iss}
           >{iss}</option>
         ))}
       </select>
