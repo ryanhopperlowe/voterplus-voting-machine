@@ -3,7 +3,7 @@ import VoteContext from '../../../context/VoteContext';
 import { getRelevantOptions } from '../../../backend/mock-server-calls';
 import { voteSetSelection } from '../../../reducers/voteReducer';
 
-const VoteOptions = (props) => {
+const VoteOptions = () => {
 
   const { issue, selection, voteDispatch } = useContext(VoteContext);
 
