@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { getAvailableIssues } from '../../../backend/mock-server-calls';
+// import { getAvailableIssues } from '../../../backend/mock-server-calls';
+// import { getAvailableIssues } from '../../../backend/server-calls';
 import VoteContext from '../../../context/VoteContext';
 import { voteSetIssue } from '../../../reducers/voteReducer';
+import { getAvailableIssues } from '../../../backend/api';
 
 const IssuesSelect = () => {
 
@@ -10,10 +12,12 @@ const IssuesSelect = () => {
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
-    console.log('got available issues');
-    getAvailableIssues(null)
+    getAvailableIssues()
     .then((response) => {
       setIssues(response.issues);
+      console.log(response);
+      
+      console.log('got available issues');
     })
     .catch(err => {
       console.error(err);
