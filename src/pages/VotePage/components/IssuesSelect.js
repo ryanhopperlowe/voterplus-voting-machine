@@ -14,8 +14,8 @@ const IssuesSelect = () => {
   useEffect(() => {
     getAvailableIssues()
     .then((response) => {
-      setIssues(response.issues);
-      console.log(response);
+      setIssues(response.data);
+      console.log(response.data);
       
       console.log('got available issues');
     })

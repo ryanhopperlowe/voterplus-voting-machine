@@ -3,7 +3,7 @@ import * as mock from './mock-server-calls';
 
 const getServerCalls = (calls) => ({ ...calls });
 
-const getEnvCalls = (env) => {
+const getEnvCalls = (env = process.env.NODE_ENV) => {
   switch (env) {
     case 'production':
       return getServerCalls(db);
@@ -14,6 +14,6 @@ const getEnvCalls = (env) => {
   }
 };
 
-const { getAvailableIssues, getRelevantOptions, sendVoteSubmission } = getEnvCalls(process.env.NODE_ENV);
+const { getAvailableIssues, getRelevantOptions, sendVoteSubmission } = getEnvCalls();
 
 export { getAvailableIssues, getRelevantOptions, sendVoteSubmission };

@@ -27,7 +27,7 @@ const VoteOptions = () => {
       <label>Select Option for {issue}</label><br />
       {options.map((opt) => (
         <div key={opt}>
-          <input 
+          <input
             name="selection"
             type="radio"
             checked={selection === opt}
