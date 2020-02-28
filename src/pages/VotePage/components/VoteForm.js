@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect, useReducer } from 'react';
 import ReceiptContext from '../../../context/ReceiptContext';
 import VoteContext from '../../../context/VoteContext';
-// import { sendVoteSubmission } from '../../../backend/mock-server-calls';
 import { rSetReceipt } from '../../../reducers/receipt';
 import ErrorBox from '../../../components/ErrorBox';
 import voteReducer from '../../../reducers/voteReducer';
@@ -9,6 +8,7 @@ import IssuesSelect from './IssuesSelect';
 import VoteOptions from './VoteOptions';
 import RtvInput from './RtvInput';
 import { sendVoteSubmission } from '../../../backend/api';
+import { Button } from 'baseui/button';
 
 const VoteForm = () => {
   const { receiptDispatch } = useContext(ReceiptContext);
@@ -58,7 +58,7 @@ const VoteForm = () => {
         
         <RtvInput autoPopulate={vote.issue} />
         
-        <button>Submit</button>
+        <Button>Submit</Button>
       
       </form>
 
