@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import VoteContext from '../../../context/VoteContext';
-// import { getRelevantOptions } from '../../../backend/mock-server-calls';
 import { voteSetSelection } from '../../../reducers/voteReducer';
 import { getRelevantOptions } from '../../../backend/api';
+import { RadioGroup, Radio, ALIGN } from "baseui/radio";
+import { FormControl } from 'baseui/form-control';
 
 const VoteOptions = () => {
 
@@ -24,23 +25,43 @@ const VoteOptions = () => {
   }, [issue, voteDispatch])
 
   return options.length > 0 && (
-    <div>
-      <label>Select Option for {issue}</label><br />
-      {options.map((opt) => (
-        <div key={opt}>
-          <input
-            name="selection"
-            type="radio"
-            checked={selection === opt}
-            value={opt}
-            required
-            onChange={(e) => voteDispatch(voteSetSelection(e.target.value))}
-          />
-          {opt}
-        </div>
-      ))}
-    </div>
+    <FormControl
+      label={() => "Select an Option for " + issue}
+    >
+      <RadioGroup
+        value={selection}
+        onChange={(e) => voteDispatch(voteSetSelection(e.target.value))}
+        align={ALIGN.vertical}
+        required
+      >
+        {options.map((option) => (
+          <Radio
+            value={option}
+            key={option}
+          >{option}</Radio>
+        ))}
+      </RadioGroup>
+    </FormControl>
   );
+
+  // return options.length > 0 && (
+  //   <div>
+  //     <label>Select Option for {issue}</label><br />
+  //     {options.map((opt) => (
+  //       <div key={opt}>
+  //         <input
+  //           name="selection"
+  //           type="radio"
+  //           checked={selection === opt}
+  //           value={opt}
+  //           required
+  //           onChange={(e) => voteDispatch(voteSetSelection(e.target.value))}
+  //         />
+  //         {opt}
+  //       </div>
+  //     ))}
+  //   </div>
+  // );
 };
 
 export default VoteOptions;

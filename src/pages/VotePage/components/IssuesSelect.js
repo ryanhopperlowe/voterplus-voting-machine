@@ -4,15 +4,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import VoteContext from '../../../context/VoteContext';
 import { voteSetIssue } from '../../../reducers/voteReducer';
 import { getAvailableIssues } from '../../../backend/api';
+import { FormControl } from 'baseui/form-control';
+import { Select } from 'baseui/select';
 
 const IssuesSelect = () => {
 
   const { voteDispatch } = useContext(VoteContext);
 
+  const [choice, setChoice] = useState([]);
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
-    setIssues([]);
     getAvailableIssues()
     .then(({ data }) => {
       setIssues(data);      
@@ -24,18 +26,21 @@ const IssuesSelect = () => {
   }, []);
 
   return (
-    <div>
-      <label>Select the issue you'd like to vote on!</label><br />
-      <select onChange={(e) => voteDispatch(voteSetIssue(e.target.value.toString()))}>
-        <option value="">Select an issue to vote on</option>
-        {issues.length > 0 && issues.map((iss) => (
-          <option
-            key={iss} 
-            value={iss}
-          >{iss}</option>
-        ))}
-      </select>
-    </div>
+    <FormControl
+      label={() => "Select issue to vote on:"}
+    >
+      <Select
+        value={choice}
+        onChange={({ value, option: { value: iss} }) => {
+          setChoice(value)
+          voteDispatch(voteSetIssue(iss))
+        }}
+        placeholder="Select issue"
+        valueKey="value"
+        options={issues.map((iss) => ({ label: iss, value: iss }))}
+        required
+      />
+    </FormControl>
   );
 };
 

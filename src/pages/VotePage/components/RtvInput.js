@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import VoteContext from '../../../context/VoteContext';
 import { MAPPINGS } from '../../../backend/mock-server-calls';
 import { voteSetRtv } from '../../../reducers/voteReducer';
+import { FormControl } from 'baseui/form-control';
+import { Textarea } from 'baseui/textarea';
 
 const RtvInput = ({ autoPopulate = '' }) => {
 
@@ -17,14 +19,14 @@ const RtvInput = ({ autoPopulate = '' }) => {
   };
 
   return (
-    <div>
-      <label>Paste your GovernMint issued Voting Right here!</label><br />
-      <textarea
+    <FormControl
+      label={() => "Paste your GovernMint issued voting right here:"}
+    >
+      <Textarea 
         value={rtv}
         onChange={(e) => voteDispatch(voteSetRtv(e.target.value))}
-      ></textarea>
-      <br />
-    </div>
+      />
+    </FormControl>
   );
 };
 
