@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import DashboardPage from '../pages/DashboardPage/DashboardPage';
-import Header from '../components/Header';
+import Header from '../components/HeaderNav';
 import VotePage from '../pages/VotePage/VotePage';
 
 const AppRouter = () => (
