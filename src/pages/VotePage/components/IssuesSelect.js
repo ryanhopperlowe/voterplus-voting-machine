@@ -12,11 +12,10 @@ const IssuesSelect = () => {
   const [issues, setIssues] = useState([]);
 
   useEffect(() => {
+    setIssues([]);
     getAvailableIssues()
-    .then((response) => {
-      setIssues(response.data);
-      console.log(response.data);
-      
+    .then(({ data }) => {
+      setIssues(data);      
       console.log('got available issues');
     })
     .catch(err => {
@@ -27,9 +26,9 @@ const IssuesSelect = () => {
   return (
     <div>
       <label>Select the issue you'd like to vote on!</label><br />
-      <select onChange={(e) => voteDispatch(voteSetIssue(e.target.value))}>
+      <select onChange={(e) => voteDispatch(voteSetIssue(e.target.value.toString()))}>
         <option value="">Select an issue to vote on</option>
-        {issues.map((iss) => (
+        {issues.length > 0 && issues.map((iss) => (
           <option
             key={iss} 
             value={iss}

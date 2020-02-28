@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import VoteContext from '../../../context/VoteContext';
-import { getRelevantOptions } from '../../../backend/mock-server-calls';
+// import { getRelevantOptions } from '../../../backend/mock-server-calls';
 import { voteSetSelection } from '../../../reducers/voteReducer';
+import { getRelevantOptions } from '../../../backend/api';
 
 const VoteOptions = () => {
 
@@ -14,8 +15,8 @@ const VoteOptions = () => {
 
     if (issue !== '') {
       getRelevantOptions(issue)
-      .then((response) => {
-        setOptions(response.options)
+      .then(({ data }) => {
+        setOptions(data);
       });
     } else {
       setOptions([]);

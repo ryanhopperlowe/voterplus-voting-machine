@@ -4,43 +4,48 @@ function generateReceiptMappings (count = 5) {
   let mappings = [];
   let rtvs = [];
   let issues = [];
-  let options = [];
   for (let i = 0; i < count; i++) {
     let rtv = uuid();
 
-    issues.push('Issue #' + i);
-    options.push('Option ' + (i + 1));
+    let code_name = 'Issue #' + i;
+
+    issues.push({
+      code_name,
+      options: [1, 2, 3, 4].map((opt) => `Option ${opt} for ${code_name}`)
+    });
 
     rtvs.push(rtv);
 
     mappings.push({
       rtv,
-      issue: issues[i]
+      issue: issues[i].code_name
     });
   }  
 
-  console.log({ issues, rtvs, options, mappings });
+  console.log({ issues, rtvs, mappings });
   
 
-  return [issues, rtvs, options, mappings];
+  return [issues, rtvs, mappings];
 }
 
-const [ISSUES, RTVS, OPTIONS, MAPPINGS] = generateReceiptMappings();
+const [ISSUES, RTVS, MAPPINGS] = generateReceiptMappings();
 
-export { ISSUES, RTVS, OPTIONS, MAPPINGS };
+export { ISSUES, RTVS, MAPPINGS };
 
 export const getAvailableIssues = (vmId) => {
   return new Promise((resolve, reject) => {
+    let data = ISSUES.map((iss) => iss.code_name.toString());    
     resolve({
-      issues: ISSUES
+      data
     });
   });
 };
 
-export const getRelevantOptions = (issue) => {
+export const getRelevantOptions = (issue) => {  
   return new Promise((resolve, reject) => {
+    let data = ISSUES.find((iss) => iss.code_name === issue).options;
     resolve({
-      options: OPTIONS
+      data
     });
   });
 };

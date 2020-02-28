@@ -1,7 +1,7 @@
 import Axios from 'axios';
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
 
-const baseURL = 'http://10.250.108.122:60000';
+const baseURL = 'http://10.250.108.122:4000';
 
 // Aldrich's WiFi
 // const baseURL = 'http://10.42.0.1:4000';
@@ -37,7 +37,6 @@ export const getAvailableIssues = () => {
     });
   })
   
-  
 };
 
 export const getRelevantOptions = (issueCodeName) => {
@@ -49,7 +48,7 @@ export const getRelevantOptions = (issueCodeName) => {
       });
     }
 
-    let data = voteIssues.find((i) => i.code_name === issueCodeName).options;
+    let data = voteIssues.find((iss) => iss.code_name === issueCodeName).options;
 
     if (!!data) {
       resolve({
@@ -64,3 +63,67 @@ export const getRelevantOptions = (issueCodeName) => {
 
   });
 };
+
+export const sendVoteSubmission = (issue, choice, votingRight) => new Promise((resolve, reject) => {
+  console.log('submit vote');
+
+  const [ rtv, signature ] = votingRight.split('|');
+  
+  
+  const socket = io(baseURL);
+
+  const handleError = (sock, eventString, err = new Error('Problem submitting vote, please try again')) => {
+    sock.off(eventString);
+    sock.disconnect();
+    console.error(err);
+    reject({
+      message: 'Problem submitting vote, please try again'
+    });
+  }
+  
+  socket.on('connect', () => {
+    
+    
+    socket.emit('vote', { issue, choice, rtv, signature });
+    
+    socket.on('get_ris', ({ ris_req, error: rtvError = undefined }) => {
+      console.log(`This is the RIS: ${ris_req}`);
+
+      if (!!rtvError) {
+        handleError(socket, 'get_ris', rtvError);
+        return;
+      }
+
+      //
+      // Do stuff with ris
+      //
+
+      socket.off('get_ris');
+
+      let data = 'some data';
+
+      socket.emit('get_ris_response', data);
+
+      socket.on('receipt', ({ receipt, error: receiptError = null }) => {
+        if (!!receiptError) {
+          handleError(socket, 'receipt', receiptError);
+          return;
+        }
+
+        console.log('Here is the receipt from the server: ', receipt);
+
+        //
+        // do stuff with receipt
+        //
+
+        socket.off('receipt');
+        socket.disconnect();
+
+        resolve({
+          message: 'Receipt received',
+          receipt
+        });
+      });
+    });
+  });
+}); 

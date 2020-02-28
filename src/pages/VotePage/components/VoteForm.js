@@ -1,13 +1,14 @@
 import React, { useState, useContext, useEffect, useReducer } from 'react';
 import ReceiptContext from '../../../context/ReceiptContext';
 import VoteContext from '../../../context/VoteContext';
-import { sendVoteSubmission } from '../../../backend/mock-server-calls';
+// import { sendVoteSubmission } from '../../../backend/mock-server-calls';
 import { rSetReceipt } from '../../../reducers/receipt';
 import ErrorBox from '../../../components/ErrorBox';
 import voteReducer from '../../../reducers/voteReducer';
 import IssuesSelect from './IssuesSelect';
 import VoteOptions from './VoteOptions';
 import RtvInput from './RtvInput';
+import { sendVoteSubmission } from '../../../backend/api';
 
 const VoteForm = () => {
   const { receiptDispatch } = useContext(ReceiptContext);

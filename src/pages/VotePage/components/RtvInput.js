@@ -12,7 +12,8 @@ const RtvInput = ({ autoPopulate = '' }) => {
   }, [autoPopulate, voteDispatch]);
 
   const getMappedRtv = (issue) => {
-    return MAPPINGS.find((mapped) => mapped.issue === issue).rtv;
+    let mappings = MAPPINGS.find((mapped) => mapped.issue === issue).rtv;
+    return mappings;
   };
 
   return (
