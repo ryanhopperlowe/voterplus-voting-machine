@@ -15,11 +15,9 @@ const receiptReducer = (state, action) => {
 
 export default receiptReducer;
 
-export const rSetReceipt = ({ issue, selection, receiptNo }) => ({
+export const rSetReceipt = (vote) => ({
   type: 'VOTE_SUBMIT',
   receipt: {
-    issue,
-    selection,
-    receiptNo
+    ...vote
   }
 });

@@ -56,7 +56,7 @@ const VoteForm = () => {
 
         <VoteOptions />
         
-        <RtvInput autoPopulate={vote.issue} />
+        <RtvInput />
         
         <Button>Submit</Button>
       
