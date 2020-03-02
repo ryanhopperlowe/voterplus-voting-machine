@@ -1,4 +1,36 @@
 import uuid from "uuid";
+import blindSigs from 'blind-signatures';
+
+let pubKey;
+export const loadKeys = async () => {
+  return new Promise((resolve, reject) => {
+    console.log('Loading Public key');
+
+
+    let keyText = `-----BEGIN RSA PUBLIC KEY-----
+    MIIBCgKCAQEAhCcaOOQuP9758rKmmtgyZcnDbOmj/aLVW5VJhg8oYrw6fDYwfA3k
+    fzra/Q0JW7NIhUX6zJfKzxs3Me0kLVK3f3J0ztetZY7rApSIgggruF5qouK5GCcn
+    C7PXZ5mGYIsqPz5ASLjSHqbqW81xK65Vk5iFUq8pA9WrmKXB4zFZ5sXohdieu3dy
+    tInZXqbfD4+HJ6dkRo7tC3mmvH6aF2SXrasMRH5UiHe5zp509QWSgqz6gFQTL++9
+    sTuZsyaH+NFluk5z17UqLr0cMHpUUulNMXqGONiqD5Ru3WH/773tJXpGDlNBADM4
+    oI6SPNKu7qYguuNnkVoZWS8vJdXnaAL7TwIDAQAB
+    -----END RSA PUBLIC KEY-----`;
+
+    const pubKey1 = blindSigs.keyGeneration();
+    const nPubKey = pubKey1.importKey(keyText, 'pkcs1-public-pem');
+
+    if (!!nPubKey.keyPair.n) {
+      console.log('loaded public key');
+      console.log(`N: ${nPubKey.keyPair.n}`);
+
+      pubKey = nPubKey;
+      resolve(nPubKey);
+    } else {
+      reject(new Error("Failure to load public keys"));
+    }
+    
+  });
+};
 
 function generateReceiptMappings (count = 5) {
   let mappings = [];

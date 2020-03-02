@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Centered } from '../../../baseui/style-formats';
 import { Card, StyledBody } from 'baseui/card';
 import { ListItem, ListItemLabel } from 'baseui/list';
@@ -8,8 +8,21 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Notification, KIND } from 'baseui/notification';
 import { Button } from 'baseui/button';
 
-const Receipt = ({ issue, selection, receiptNo }) => {
+const Receipt = ({ receipt }) => {
   const [notify, setNotify] = useState('');
+
+  const display = [
+    { key: 'issue', title: 'Issue' },
+    { key: 'choice', title: 'Selection' },
+    { key: 'receiptNum', title: 'Receipt Number' },
+    { key: 'voteGuid', title: 'Vote ID' },
+    { key: 'timeStamp', title: 'Time Stamp' },
+    { key: 'vm', title: 'VM ID' }
+  ];
+
+  useEffect(() => {
+    console.log(receipt);
+  }, [])
 
   return (
     <Centered>
@@ -17,27 +30,18 @@ const Receipt = ({ issue, selection, receiptNo }) => {
         <StyledBody>
           <h2>Your vote was successfully counted</h2>
           <ul>
-            <ListItem
-              endEnhancer={() => issue}
-            >
-              <ListItemLabel>Issue</ListItemLabel>
-            </ListItem>
-            <ListItem
-              endEnhancer={() => selection}
-            >
-              <ListItemLabel>Selection</ListItemLabel>
-            </ListItem>
-            <FormControl 
-              label={() => "Receipt Number"}
-            >
-              <Textarea
-                disabled
-                value={receiptNo}
-              />
-            </FormControl>
+            {display.map(({ key, title }) => (
+              <ListItem key={key}
+                endEnhancer={() => (receipt[key].toString().length >= 20 ? receipt[key].toString().slice(0, 20) + '...' : receipt[key].toString())}
+              >
+                <ListItemLabel>{title}</ListItemLabel>
+              </ListItem>
+
+            ))}
+            
             {!notify && (
               <CopyToClipboard
-                text={receiptNo}
+                text={JSON.stringify(receipt)}
                 onCopy={() => setNotify('Receipt copied to clipboard')}
               >
                 <Button>Copy to clipboard</Button>

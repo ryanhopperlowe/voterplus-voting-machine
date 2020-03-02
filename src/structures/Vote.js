@@ -1,7 +1,8 @@
 'use strict';
 const blindSigs = require('blind-signatures');
 const utils = require('./utils');
-const {VOTE_RIS_LENGTH, IDEN_STR} = require('./Governmint');
+const VOTE_RIS_LENGTH = 10
+const IDEN_STR = 'This is one voting right for '
 
 /**
  * Class representing a vote.
