@@ -1,6 +1,7 @@
 import uuid from "uuid";
 import blindSigs from 'blind-signatures';
 
+// eslint-disable-next-line
 let pubKey;
 export const loadKeys = async () => {
   return new Promise((resolve, reject) => {
@@ -82,7 +83,7 @@ export const getRelevantOptions = (issue) => {
   });
 };
 
-export const sendVoteSubmission = (issue, selection, rtv) => {
+export const sendVoteSubmission = (issue, choice, rtv) => {
   return new Promise((resolve, reject) => {
     let mapping = MAPPINGS.find(({ rtv: mappedRtv }) => rtv === mappedRtv);
 
@@ -101,7 +102,7 @@ export const sendVoteSubmission = (issue, selection, rtv) => {
         message: 'Vote Submission Successful!',
         receipt: {
           issue,
-          selection,
+          choice,
           receiptNo: uuid()
         }
       });

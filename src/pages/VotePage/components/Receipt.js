@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Centered } from '../../../baseui/style-formats';
 import { Card, StyledBody } from 'baseui/card';
 import { ListItem, ListItemLabel } from 'baseui/list';
-import { FormControl } from 'baseui/form-control';
-import { Textarea } from 'baseui/textarea';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Notification, KIND } from 'baseui/notification';
 import { Button } from 'baseui/button';
@@ -17,12 +15,14 @@ const Receipt = ({ receipt }) => {
     { key: 'receiptNum', title: 'Receipt Number' },
     { key: 'voteGuid', title: 'Vote ID' },
     { key: 'timeStamp', title: 'Time Stamp' },
-    { key: 'vm', title: 'VM ID' }
+    { key: 'vm', title: 'VM ID' },
+    { key: 'rtv', title: 'Voting Right' },
+    { key: 'receiptNo', title: 'Receipt Number' }
   ];
 
   useEffect(() => {
     console.log(receipt);
-  }, [])
+  }, [receipt]);
 
   return (
     <Centered>
@@ -30,7 +30,7 @@ const Receipt = ({ receipt }) => {
         <StyledBody>
           <h2>Your vote was successfully counted</h2>
           <ul>
-            {display.map(({ key, title }) => (
+            {display.map(({ key, title }) => !!receipt[key] && (
               <ListItem key={key}
                 endEnhancer={() => (receipt[key].toString().length >= 20 ? receipt[key].toString().slice(0, 20) + '...' : receipt[key].toString())}
               >

@@ -1,5 +1,8 @@
+// eslint-disable-next-line
 'use strict';
+// eslint-disable-next-line
 const blindSigs = require('blind-signatures');
+// eslint-disable-next-line
 const utils = require('./utils');
 const VOTE_RIS_LENGTH = 10
 const IDEN_STR = 'This is one voting right for '
@@ -16,6 +19,7 @@ class Vote
     {
         // check if blinded att is set.
         // if not, blind, save the factor, and return the blinded in string type.
+        // eslint-disable-next-line
         if(!'_blinded' in this)
         {
             this._blind();
@@ -30,6 +34,7 @@ class Vote
      */
     get blindingFactor()
     {
+        // eslint-disable-next-line
         if(!'_blinded' in this)
         {
             this._blind();
@@ -48,6 +53,7 @@ class Vote
 
     get signature()
     {
+        // eslint-disable-next-line
         if(!'_signature' in this)
         {
             // maybe throw an error
@@ -103,6 +109,7 @@ class Vote
             this._signature = signature;
             this.leftIdent = lIden;
             this.rightIdent = rIden;
+            // eslint-disable-next-line
             let {guid, issue, E, N, idenHashes} = Vote.parseVote(rawVote);
             this._voteStr = rawVote;
             this._guid = guid;

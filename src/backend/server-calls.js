@@ -14,6 +14,7 @@ const instance = () => Axios.create({
 
 let voteIssues = [];
 
+// eslint-disable-next-line
 let pubKey;
 export const loadKeys = async () => {
   return new Promise((resolve, reject) => {
@@ -124,7 +125,7 @@ export const sendVoteSubmission = (issue, choice, votingRight) => new Promise((r
       //
       // Do stuff with ris
       //
-
+      // eslint-disable-next-line
       let { guid, issue: voteIssue, E: voteE, N: voteN, idenHashes: [ leftHash, rightHash ] } = Vote.parseVote(rtv);
       let currentVote = new Vote(null, null, null, null, signature, rtv, leftHash, rightHash);
 

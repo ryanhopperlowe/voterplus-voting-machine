@@ -14,6 +14,6 @@ const getEnvCalls = (env = process.env.NODE_ENV) => {
   }
 };
 
-const { getAvailableIssues, getRelevantOptions, sendVoteSubmission, loadKeys } = getEnvCalls('production');
+const { getAvailableIssues, getRelevantOptions, sendVoteSubmission, loadKeys } = getEnvCalls();
 
 export { getAvailableIssues, getRelevantOptions, sendVoteSubmission, loadKeys };
